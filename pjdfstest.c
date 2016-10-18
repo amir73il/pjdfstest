@@ -251,6 +251,8 @@ static struct syscall_desc syscalls[] = {
 	{ "fchmod", ACTION_FCHMOD, { TYPE_DESCRIPTOR, TYPE_NUMBER, TYPE_NONE } },
 #ifdef HAS_LCHMOD
 	{ "lchmod", ACTION_LCHMOD, { TYPE_STRING, TYPE_NUMBER, TYPE_NONE } },
+#else
+	{ "lchmod", ACTION_CHMOD, { TYPE_STRING, TYPE_NUMBER, TYPE_NONE } },
 #endif
 #ifdef HAS_FCHMODAT
 	{ "fchmodat", ACTION_FCHMODAT, { TYPE_DESCRIPTOR, TYPE_STRING, TYPE_NUMBER, TYPE_STRING, TYPE_NONE } },
