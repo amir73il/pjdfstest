@@ -13,8 +13,8 @@ nx=`dirgen_max`
 nxx="${nx}x"
 
 mkdir -p "${nx%/*}"
-expect 0 symlink ${nx} ${n0}
-expect 0 unlink ${n0}
+expect ENAMETOOLONG symlink ${nx} ${n0}
+expect ENOENT unlink ${n0}
 expect 0 symlink ${n0} ${nx}
 expect 0 unlink ${nx}
 expect ENAMETOOLONG symlink ${n0} ${nxx}
