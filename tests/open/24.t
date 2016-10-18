@@ -11,7 +11,7 @@ echo "1..5"
 n0=`namegen`
 
 expect 0 bind ${n0}
-expect "EOPNOTSUPP" open ${n0} O_RDONLY
-expect "EOPNOTSUPP" open ${n0} O_WRONLY
-expect "EOPNOTSUPP" open ${n0} O_RDWR
+expect "ENXIO" open ${n0} O_RDONLY
+expect "ENXIO" open ${n0} O_WRONLY
+expect "ENXIO" open ${n0} O_RDWR
 expect 0 unlink ${n0}
