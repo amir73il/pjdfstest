@@ -220,11 +220,19 @@ for type in regular dir fifo block char socket symlink; do
 		expect 0 chmod ${n0} 06555
 		expect 06555,65534,65533 stat ${n0} mode,uid,gid
 		expect 0 -u 65534 -g 65533,65532 chown ${n0} 65534 65532
-		expect 0555,65534,65532 stat ${n0} mode,uid,gid
+		if [ "${type}" != "dir" ]; then
+			expect 0555,65534,65532 stat ${n0} mode,uid,gid
+		else
+			expect "(06555|0555),65534,65532" stat ${n0} mode,uid,gid
+		fi
 		expect 0 chmod ${n0} 06555
 		expect 06555,65534,65532 stat ${n0} mode,uid,gid
 		expect 0 -u 65534 -g 65533,65532 -- chown ${n0} -1 65533
-		expect 0555,65534,65533 stat ${n0} mode,uid,gid
+		if [ "${type}" != "dir" ]; then
+			expect 0555,65534,65533 stat ${n0} mode,uid,gid
+		else
+			expect "(06555|0555),65534,65533" stat ${n0} mode,uid,gid
+		fi
 		expect 0 chmod ${n0} 06555
 		expect 06555,65534,65533 stat ${n0} mode,uid,gid
 		expect 0 -u 65534 -g 65533,65532 -- chown ${n0} -1 -1
@@ -236,14 +244,24 @@ for type in regular dir fifo block char socket symlink; do
 		expect 06555,65534,65533 stat ${n0} mode,uid,gid
 		expect 06555,65534,65533 stat ${n1} mode,uid,gid
 		expect 0 -u 65534 -g 65533,65532 chown ${n1} 65534 65532
-		expect 0555,65534,65532 stat ${n0} mode,uid,gid
-		expect 0555,65534,65532 stat ${n1} mode,uid,gid
+		if [ "${type}" != "dir" ]; then
+			expect 0555,65534,65532 stat ${n0} mode,uid,gid
+			expect 0555,65534,65532 stat ${n1} mode,uid,gid
+		else
+			expect "(06555|0555),65534,65532" stat ${n0} mode,uid,gid
+			expect "(06555|0555),65534,65532" stat ${n1} mode,uid,gid
+		fi
 		expect 0 chmod ${n1} 06555
 		expect 06555,65534,65532 stat ${n0} mode,uid,gid
 		expect 06555,65534,65532 stat ${n1} mode,uid,gid
 		expect 0 -u 65534 -g 65533,65532 -- chown ${n1} -1 65533
-		expect 0555,65534,65533 stat ${n0} mode,uid,gid
-		expect 0555,65534,65533 stat ${n1} mode,uid,gid
+		if [ "${type}" != "dir" ]; then
+			expect 0555,65534,65533 stat ${n0} mode,uid,gid
+			expect 0555,65534,65533 stat ${n1} mode,uid,gid
+		else
+			expect "(06555|0555),65534,65533" stat ${n0} mode,uid,gid
+			expect "(06555|0555),65534,65533" stat ${n1} mode,uid,gid
+		fi
 		expect 0 chmod ${n1} 06555
 		expect 06555,65534,65533 stat ${n0} mode,uid,gid
 		expect 06555,65534,65533 stat ${n1} mode,uid,gid
@@ -270,7 +288,11 @@ for type in regular dir fifo block char socket symlink; do
 		fi
 		expect 06555,65534,65533 lstat ${n0} mode,uid,gid
 		expect 0 -u 65534 -g 65533,65532 lchown ${n0} 65534 65532
-		expect 0555,65534,65532 lstat ${n0} mode,uid,gid
+		if [ "${type}" != "dir" ]; then
+			expect 0555,65534,65532 lstat ${n0} mode,uid,gid
+		else
+			expect "(06555|0555),65534,65532" lstat ${n0} mode,uid,gid
+		fi
 		if supported lchmod; then
 			expect 0 lchmod ${n0} 06555
 		else
@@ -278,7 +300,11 @@ for type in regular dir fifo block char socket symlink; do
 		fi
 		expect 06555,65534,65532 lstat ${n0} mode,uid,gid
 		expect 0 -u 65534 -g 65533,65532 -- lchown ${n0} -1 65533
-		expect 0555,65534,65533 lstat ${n0} mode,uid,gid
+		if [ "${type}" != "dir" ]; then
+			expect 0555,65534,65533 lstat ${n0} mode,uid,gid
+		else
+			expect "(06555|0555),65534,65533" lstat ${n0} mode,uid,gid
+		fi
 		if supported lchmod; then
 			expect 0 lchmod ${n0} 06555
 		else
