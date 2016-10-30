@@ -23,13 +23,13 @@ echo "1..3"
 
 # 1
 expect 0 mkdir ${d0} 0777
-expect 0 setfattr ${d0} "hi"
-expect 'foo' getfattr ${d0} b
+expect 0 setxattr ${d0} 'user.foo' 'bar'
+expect 'bar' getxattr ${d0} 'user.foo'
 
 #
 # Clean
 #
 rm -rf ${d0}
 
-else quick_exit_not_ok "xattrs unavailable"
+else quick_exit_not_ok "user xattrs unavailable"
 fi
