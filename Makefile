@@ -3,14 +3,15 @@
 #CFLAGS+=-DHAS_LCHMOD
 #CFLAGS+=-DHAS_CHFLAGS
 #CFLAGS+=-DHAS_LCHFLAGS
-#CFLAGS+=-DHAS_TRUNCATE64
-#CFLAGS+=-DHAS_STAT64
-CFLAGS+=-DHAS_ACL -lacl -ggdb
+CFLAGS+=-DHAS_TRUNCATE64
+CFLAGS+=-DHAS_STAT64
+CFLAGS+=-DHAS_ACL
+LDFLAGS=-lacl -ggdb
 
 all:	fstest
 
 fstest:	fstest.c
-	gcc -Wall ${CFLAGS} fstest.c -o fstest
+	gcc -Wall ${CFLAGS} fstest.c ${LDFLAGS} -o fstest
 
 clean:
 	rm -f fstest
